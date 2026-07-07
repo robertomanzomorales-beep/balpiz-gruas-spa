@@ -1,0 +1,206 @@
+.section {
+  position: relative;
+  padding: 104px 0 96px;
+  background: #f5f1e8;
+  color: #171717;
+  border-bottom: 1px solid rgba(20, 20, 20, 0.1);
+  overflow: hidden;
+}
+
+.container {
+  width: min(1240px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 0.38fr 1fr;
+  gap: 70px;
+  align-items: start;
+  margin-bottom: 56px;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #b48600;
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.kicker::before {
+  content: "";
+  width: 42px;
+  height: 2px;
+  background: #b48600;
+}
+
+.titleBlock h2 {
+  margin: 0;
+  max-width: 820px;
+  color: #171717;
+  font-size: clamp(36px, 4.3vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  font-weight: 850;
+}
+
+.titleBlock p {
+  max-width: 720px;
+  margin: 22px 0 0;
+  color: #444444;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 26px 0;
+  border-top: 1px solid rgba(20, 20, 20, 0.12);
+  border-bottom: 1px solid rgba(20, 20, 20, 0.12);
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: clientesLoop 34s linear infinite;
+  will-change: transform;
+}
+
+.carousel:hover .track {
+  animation-play-state: paused;
+}
+
+.logoBox {
+  flex: 0 0 auto;
+  width: 250px;
+  height: 118px;
+  margin-right: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(20, 20, 20, 0.1);
+  border-radius: 3px;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.logoBox:hover {
+  transform: translateY(-3px);
+  background: #ffffff;
+  border-color: rgba(20, 20, 20, 0.18);
+}
+
+.logo {
+  max-width: 170px;
+  max-height: 64px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: saturate(0.96) contrast(1.03);
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+
+.logoBox:hover .logo {
+  transform: scale(1.04);
+  filter: saturate(1.05) contrast(1.06);
+}
+
+.fadeLeft,
+.fadeRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: clamp(48px, 10vw, 160px);
+  pointer-events: none;
+}
+
+.fadeLeft {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    #f5f1e8 0%,
+    rgba(245, 241, 232, 0) 100%
+  );
+}
+
+.fadeRight {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    #f5f1e8 0%,
+    rgba(245, 241, 232, 0) 100%
+  );
+}
+
+@keyframes clientesLoop {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-1340px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .header {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 700px) {
+  .section {
+    padding: 76px 0 72px;
+  }
+
+  .container {
+    width: min(100% - 32px, 1240px);
+  }
+
+  .titleBlock h2 {
+    font-size: clamp(34px, 10vw, 44px);
+  }
+
+  .titleBlock p {
+    font-size: 16px;
+  }
+
+  .logoBox {
+    width: 210px;
+    height: 104px;
+    margin-right: 14px;
+  }
+
+  .logo {
+    max-width: 145px;
+    max-height: 58px;
+  }
+
+  .track {
+    animation-duration: 28s;
+  }
+
+  @keyframes clientesLoop {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-1120px);
+    }
+  }
+}

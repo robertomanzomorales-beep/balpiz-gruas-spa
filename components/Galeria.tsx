@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import styles from "./Galeria.module.css";
 
@@ -52,9 +52,9 @@ const galleryImages = [
 ];
 
 export default function Galeria() {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const openLightbox = (index) => {
+  const openLightbox = (index: number) => {
     setActiveIndex(index);
   };
 
@@ -63,21 +63,23 @@ export default function Galeria() {
   };
 
   const showPrev = () => {
-    setActiveIndex((current) =>
-      current === 0 ? galleryImages.length - 1 : current - 1
-    );
+    setActiveIndex((current) => {
+      if (current === null) return null;
+      return current === 0 ? galleryImages.length - 1 : current - 1;
+    });
   };
 
   const showNext = () => {
-    setActiveIndex((current) =>
-      current === galleryImages.length - 1 ? 0 : current + 1
-    );
+    setActiveIndex((current) => {
+      if (current === null) return null;
+      return current === galleryImages.length - 1 ? 0 : current + 1;
+    });
   };
 
   useEffect(() => {
     if (activeIndex === null) return;
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: globalThis.KeyboardEvent) => {
       if (event.key === "Escape") closeLightbox();
       if (event.key === "ArrowLeft") showPrev();
       if (event.key === "ArrowRight") showNext();
@@ -119,7 +121,11 @@ export default function Galeria() {
                 key={item.src}
                 onClick={() => openLightbox(index)}
                 aria-label={`Abrir imagen ${index + 1} de la galería`}
-                style={{ "--delay": `${index * 0.055}s` }}
+                style={
+                  {
+                    "--delay": `${index * 0.055}s`,
+                  } as CSSProperties
+                }
               >
                 <Image
                   src={item.src}
@@ -135,9 +141,7 @@ export default function Galeria() {
           </div>
         </div>
 
-        <div className={styles.mobileHint}>
-          Desliza para ver más imágenes
-        </div>
+        <div className={styles.mobileHint}>Desliza para ver más imágenes</div>
       </div>
 
       {activeIndex !== null && (

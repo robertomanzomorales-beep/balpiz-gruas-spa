@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import styles from "./Servicios.module.css";
 
 const services = [
@@ -75,7 +76,11 @@ export default function Servicios() {
             <article
               className={styles.card}
               key={service.title}
-              style={{ "--delay": `${index * 0.08}s` }}
+              style={
+                {
+                  "--delay": `${index * 0.08}s`,
+                } as CSSProperties
+              }
             >
               <div className={styles.cardImage}>
                 <Image

@@ -1,7 +1,45 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import styles from "./Contacto.module.css";
 
 export default function Contacto() {
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
+    "idle"
+  );
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    setStatus("sending");
+
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/balpizgruas@gmail.com",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("No se pudo enviar el formulario.");
+      }
+
+      form.reset();
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <section className={styles.section} id="contacto">
       <div className={styles.container}>
@@ -78,12 +116,18 @@ export default function Contacto() {
 
           <form
             className={styles.form}
+            onSubmit={handleSubmit}
             action="https://formsubmit.co/balpizgruas@gmail.com"
             method="POST"
           >
-            <input type="hidden" name="_subject" value="Nueva cotización desde sitio web BALPIZ GRÚAS SPA" />
+            <input
+              type="hidden"
+              name="_subject"
+              value="Nueva solicitud de cotización desde sitio web BALPIZ GRÚAS SPA"
+            />
             <input type="hidden" name="_template" value="table" />
             <input type="hidden" name="_captcha" value="false" />
+            <input type="text" name="_honey" style={{ display: "none" }} />
 
             <div className={styles.formTop}>
               <span>Formulario de cotización</span>
@@ -95,7 +139,7 @@ export default function Contacto() {
                 Nombre
                 <input
                   type="text"
-                  name="nombre"
+                  name="Nombre"
                   placeholder="Nombre completo"
                   required
                 />
@@ -105,7 +149,7 @@ export default function Contacto() {
                 Empresa
                 <input
                   type="text"
-                  name="empresa"
+                  name="Empresa"
                   placeholder="Nombre de empresa"
                 />
               </label>
@@ -114,7 +158,7 @@ export default function Contacto() {
                 Teléfono
                 <input
                   type="tel"
-                  name="telefono"
+                  name="Telefono"
                   placeholder="+56 9"
                   required
                 />
@@ -124,7 +168,7 @@ export default function Contacto() {
                 RUT de empresa
                 <input
                   type="text"
-                  name="rut_empresa"
+                  name="RUT empresa"
                   placeholder="76.000.000-0"
                 />
               </label>
@@ -133,7 +177,7 @@ export default function Contacto() {
                 Correo
                 <input
                   type="email"
-                  name="correo"
+                  name="Correo"
                   placeholder="correo@empresa.cl"
                   required
                 />
@@ -141,7 +185,7 @@ export default function Contacto() {
 
               <label>
                 Tipo de maquinaria requerida
-                <select name="maquinaria" defaultValue="" required>
+                <select name="Maquinaria requerida" defaultValue="" required>
                   <option value="" disabled>
                     Seleccionar maquinaria
                   </option>
@@ -155,7 +199,7 @@ export default function Contacto() {
 
               <label>
                 Modalidad de arriendo
-                <select name="modalidad" defaultValue="">
+                <select name="Modalidad de arriendo" defaultValue="">
                   <option value="" disabled>
                     Seleccionar modalidad
                   </option>
@@ -168,7 +212,7 @@ export default function Contacto() {
               <label className={styles.full}>
                 Mensaje
                 <textarea
-                  name="mensaje"
+                  name="Mensaje"
                   rows={5}
                   placeholder="Indique lugar de operación, capacidad requerida, fecha estimada y detalles del servicio."
                   required
@@ -176,8 +220,24 @@ export default function Contacto() {
               </label>
             </div>
 
+            {status === "success" && (
+              <div className={`${styles.statusMessage} ${styles.success}`}>
+                Mensaje enviado correctamente. Gracias por contactarnos, pronto
+                responderemos su solicitud.
+              </div>
+            )}
+
+            {status === "error" && (
+              <div className={`${styles.statusMessage} ${styles.error}`}>
+                No fue posible enviar el mensaje. Por favor intente nuevamente o
+                contáctenos por WhatsApp.
+              </div>
+            )}
+
             <div className={styles.actions}>
-              <button type="submit">Enviar solicitud</button>
+              <button type="submit" disabled={status === "sending"}>
+                {status === "sending" ? "Enviando..." : "Enviar solicitud"}
+              </button>
 
               <a
                 href="https://wa.me/56934580890?text=Hola,%20quiero%20cotizar%20el%20arriendo%20de%20maquinaria%20con%20BALPIZ%20GR%C3%9AAS%20SPA."

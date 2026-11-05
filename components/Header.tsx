@@ -25,14 +25,23 @@ export default function Header() {
 
   useEffect(() => {
     if (pathname !== "/") return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => { if (entry.isIntersecting) setActive(entry.target.id); });
-    }, { rootMargin: "-18% 0px -65% 0px", threshold: 0 });
-    menuItems.forEach(({ id }) => {
-      const section = document.getElementById(id);
-      if (section) observer.observe(section);
-    });
-    return () => observer.disconnect();
+    let frame = 0;
+    const sections = menuItems.map(({ id }) => document.getElementById(id));
+    const update = () => {
+      frame = 0;
+      const headerHeight = document.querySelector("header")?.getBoundingClientRect().height ?? 92;
+      const current = [...sections].reverse().find((section) => section && section.getBoundingClientRect().top <= headerHeight + 32);
+      setActive(current?.id ?? "inicio");
+    };
+    const schedule = () => { if (!frame) frame = window.requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, [pathname]);
 
   useEffect(() => {

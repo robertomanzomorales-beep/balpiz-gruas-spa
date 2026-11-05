@@ -46,7 +46,7 @@ export default function PrivacyPage() {
       <section>
         <h2>Conservación y resguardo</h2>
         <p>Las consultas se conservan mientras se tramita el requerimiento y se realiza el seguimiento solicitado. Al finalizar esa finalidad, corresponde suprimir o anonimizar los datos que ya no sean necesarios, salvo que deban conservarse para cumplir obligaciones legales o atender responsabilidades vinculadas al servicio. Los antecedentes de una contratación se conservan durante la relación y los plazos legales aplicables.</p>
-        <p>El sitio utiliza conexión HTTPS, no guarda los datos del formulario en el navegador y no incorpora una base de datos propia de cotizaciones. La información enviada queda en los servicios de entrega y en el correo del responsable. Puedes solicitar la revisión o supresión de esos antecedentes mediante el canal de privacidad.</p>
+        <p>El sitio utiliza conexión HTTPS, no guarda el contenido del formulario de forma persistente en el navegador y no incorpora una base de datos propia de cotizaciones. La información enviada queda en los servicios de entrega y en el correo del responsable. Puedes solicitar la revisión o supresión de esos antecedentes mediante el canal de privacidad.</p>
       </section>
       <section>
         <h2>Tus derechos y retiro de la autorización</h2>

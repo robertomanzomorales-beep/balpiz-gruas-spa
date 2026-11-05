@@ -30,7 +30,7 @@ export default function Clientes() {
   return (
     <section className={styles.section} id="clientes">
       <div className={styles.container}>
-        <div className={styles.header}>
+        <div className={styles.header} data-reveal>
           <span className={styles.kicker}>Clientes</span>
 
           <div className={styles.titleBlock}>
@@ -45,13 +45,13 @@ export default function Clientes() {
         </div>
       </div>
 
-      <div className={styles.carousel}>
+      <div className={styles.carousel} data-reveal>
         <div className={styles.fadeLeft}></div>
         <div className={styles.fadeRight}></div>
 
         <div className={styles.track}>
           {duplicatedLogos.map((logo, index) => (
-            <div className={styles.logoBox} key={`${logo.src}-${index}`}>
+            <div className={styles.logoBox} key={`${logo.src}-${index}`} aria-hidden={index >= logos.length}>
               <Image
                 src={logo.src}
                 alt={logo.alt}

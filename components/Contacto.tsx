@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { privacy } from "../lib/privacy";
 import styles from "./Contacto.module.css";
 
 export default function Contacto() {
@@ -15,6 +17,15 @@ export default function Contacto() {
     const form = event.currentTarget;
     const formData = new FormData(form);
 
+    if (status === "sending" || !form.reportValidity()) return;
+    if (formData.get("_honey")) return;
+    if (formData.get("Consentimiento de datos") !== "Autorizado") return;
+    formData.set("Texto de autorizacion", privacy.consent);
+    formData.set("Version de politica", privacy.version);
+    formData.set("Politica consultable", privacy.url);
+    formData.set("Fecha de autorizacion UTC", new Date().toISOString());
+    formData.set("_replyto", String(formData.get("Correo") || ""));
+
     setStatus("sending");
 
     try {
@@ -26,10 +37,12 @@ export default function Contacto() {
           headers: {
             Accept: "application/json",
           },
+          signal: AbortSignal.timeout(20000),
         }
       );
 
-      if (!response.ok) {
+      const result = await response.json();
+      if (!response.ok || (result.success !== true && result.success !== "true")) {
         throw new Error("No se pudo enviar el formulario.");
       }
 
@@ -43,7 +56,7 @@ export default function Contacto() {
   return (
     <section className={styles.section} id="contacto">
       <div className={styles.container}>
-        <div className={styles.header}>
+        <div className={styles.header} data-reveal>
           <div>
             <span className={styles.kicker}>Contacto</span>
           </div>
@@ -58,7 +71,7 @@ export default function Contacto() {
         </div>
 
         <div className={styles.content}>
-          <div className={styles.infoPanel}>
+          <div className={styles.infoPanel} data-reveal>
             <div className={styles.imageWrap}>
               <Image
                 src="/contacto-cotizacion-grua-horquilla-operativa.webp"
@@ -115,7 +128,8 @@ export default function Contacto() {
           </div>
 
           <form
-            className={styles.form}
+            className={styles.form} data-reveal
+            aria-busy={status === "sending"}
             onSubmit={handleSubmit}
             action="https://formsubmit.co/balpizgruas@gmail.com"
             method="POST"
@@ -127,7 +141,7 @@ export default function Contacto() {
             />
             <input type="hidden" name="_template" value="table" />
             <input type="hidden" name="_captcha" value="false" />
-            <input type="text" name="_honey" style={{ display: "none" }} />
+            <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: "none" }} />
 
             <div className={styles.formTop}>
               <span>Formulario de cotización</span>
@@ -140,6 +154,8 @@ export default function Contacto() {
                 <input
                   type="text"
                   name="Nombre"
+                  autoComplete="name"
+                  maxLength={100}
                   placeholder="Nombre completo"
                   required
                 />
@@ -150,6 +166,8 @@ export default function Contacto() {
                 <input
                   type="text"
                   name="Empresa"
+                  autoComplete="organization"
+                  maxLength={150}
                   placeholder="Nombre de empresa"
                 />
               </label>
@@ -159,6 +177,8 @@ export default function Contacto() {
                 <input
                   type="tel"
                   name="Telefono"
+                  autoComplete="tel"
+                  maxLength={30}
                   placeholder="+56 9"
                   required
                 />
@@ -169,6 +189,7 @@ export default function Contacto() {
                 <input
                   type="text"
                   name="RUT empresa"
+                  maxLength={20}
                   placeholder="76.000.000-0"
                 />
               </label>
@@ -178,6 +199,8 @@ export default function Contacto() {
                 <input
                   type="email"
                   name="Correo"
+                  autoComplete="email"
+                  maxLength={150}
                   placeholder="correo@empresa.cl"
                   required
                 />
@@ -213,6 +236,7 @@ export default function Contacto() {
                 Mensaje
                 <textarea
                   name="Mensaje"
+                  maxLength={3000}
                   rows={5}
                   placeholder="Indique lugar de operación, capacidad requerida, fecha estimada y detalles del servicio."
                   required
@@ -220,15 +244,23 @@ export default function Contacto() {
               </label>
             </div>
 
+            <div className={styles.privacyBlock}>
+              <label className={styles.consent}>
+                <input type="checkbox" name="Consentimiento de datos" value="Autorizado" required aria-describedby="cotizacion-privacidad" />
+                <span>Autorizo a BALPIZ GRÚAS SPA a tratar mis datos para responder y gestionar esta solicitud de cotización, según su <Link href="/politica-privacidad" target="_blank" rel="noopener noreferrer">Política de privacidad</Link>.</span>
+              </label>
+              <p id="cotizacion-privacidad">Los campos Empresa, RUT y Modalidad son opcionales. El envío se procesa mediante FormSubmit y llega al correo de BALPIZ; estos servicios pueden tratar datos fuera de Chile. No incluye publicidad. Puedes <Link href="/solicitud-datos">ejercer tus derechos o retirar tu autorización</Link>.</p>
+            </div>
+
             {status === "success" && (
-              <div className={`${styles.statusMessage} ${styles.success}`}>
+              <div className={`${styles.statusMessage} ${styles.success}`} role="status">
                 Mensaje enviado correctamente. Gracias por contactarnos, pronto
                 responderemos su solicitud.
               </div>
             )}
 
             {status === "error" && (
-              <div className={`${styles.statusMessage} ${styles.error}`}>
+              <div className={`${styles.statusMessage} ${styles.error}`} role="alert">
                 No fue posible enviar el mensaje. Por favor intente nuevamente o
                 contáctenos por WhatsApp.
               </div>

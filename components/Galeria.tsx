@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./Galeria.module.css";
 
@@ -97,7 +97,7 @@ export default function Galeria() {
   return (
     <section className={styles.section} id="galeria">
       <div className={styles.container}>
-        <div className={styles.header}>
+        <div className={styles.header} data-reveal>
           <div>
             <span className={styles.kicker}>Galería</span>
           </div>
@@ -112,7 +112,7 @@ export default function Galeria() {
           </div>
         </div>
 
-        <div className={styles.galleryShell}>
+        <div className={styles.galleryShell} data-reveal>
           <div className={styles.gallery}>
             {galleryImages.map((item, index) => (
               <button
@@ -121,11 +121,6 @@ export default function Galeria() {
                 key={item.src}
                 onClick={() => openLightbox(index)}
                 aria-label={`Abrir imagen ${index + 1} de la galería`}
-                style={
-                  {
-                    "--delay": `${index * 0.055}s`,
-                  } as CSSProperties
-                }
               >
                 <Image
                   src={item.src}

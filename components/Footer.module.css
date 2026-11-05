@@ -66,9 +66,6 @@
   box-shadow:
     0 24px 70px rgba(20, 20, 20, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  opacity: 0;
-  transform: translateY(22px);
-  animation: fadeSoft 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .brand,
@@ -315,9 +312,6 @@
   background: rgba(17, 17, 17, 0.94);
   border: 1px solid rgba(245, 180, 0, 0.18);
   box-shadow: 0 20px 46px rgba(20, 20, 20, 0.12);
-  opacity: 0;
-  transform: translateY(18px);
-  animation: fadeSoft 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.16s forwards;
 }
 
 .serviceStrip span {
@@ -523,3 +517,10 @@
     transition: none;
   }
 }
+.legalRow { display: flex; align-items: center; justify-content: space-between; gap: 22px; margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(20,20,20,.12); }
+.legalRow nav { display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.legalRow nav a { display: inline-flex; align-items: center; min-height: 36px; font-size: 12px; color: #635a48; text-underline-offset: 5px; }
+.legalRow nav a:hover { color: #775500; text-decoration: underline; }
+.backToTop { display: inline-flex; align-items: center; justify-content: center; gap: 14px; flex-shrink: 0; min-height: 46px; padding: 11px 18px; border: 1px solid rgba(93,75,36,.25); border-radius: 9px; color: #332c1c; background: rgba(255,255,255,.4); font-size: 12px; font-weight: 600; cursor: pointer; transition: background .25s,transform .25s; }
+.backToTop:hover { background: #f5b400; transform: translateY(-2px); }
+@media(max-width:700px) { .legalRow { flex-direction: column; align-items: flex-start; } .legalRow nav { flex-direction: column; gap: 3px; } }

@@ -20,7 +20,7 @@ export default function QuienesSomos() {
   return (
     <section className={styles.section} id="quienes-somos">
       <div className={styles.container}>
-        <div className={styles.heading}>
+        <div className={styles.heading} data-reveal>
           <div>
             <span className={styles.kicker}>Quiénes somos</span>
           </div>
@@ -31,7 +31,7 @@ export default function QuienesSomos() {
         </div>
 
         <div className={styles.mainGrid}>
-          <div className={styles.mediaColumn}>
+          <div className={styles.mediaColumn} data-reveal>
             <div className={styles.mediaFrame}>
               <Image
                 src="/quienes-somos-grua-horquilla-5t-balpiz.webp"
@@ -50,7 +50,7 @@ export default function QuienesSomos() {
             </div>
           </div>
 
-          <div className={styles.contentColumn}>
+          <div className={styles.contentColumn} data-reveal>
             <div className={styles.copyCard}>
               <div className={styles.introLine}></div>
 
@@ -86,7 +86,7 @@ export default function QuienesSomos() {
           </div>
         </div>
 
-        <div className={styles.bottomStrip}>
+        <div className={styles.bottomStrip} data-reveal>
           <span>Arriendo de maquinarias</span>
           <span>Estándar operativo</span>
           <span>Respuesta en terreno</span>

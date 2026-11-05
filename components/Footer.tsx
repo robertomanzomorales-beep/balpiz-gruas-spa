@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import BackToTop from "./BackToTop";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
@@ -9,7 +11,7 @@ export default function Footer() {
       <div className={styles.topLine}></div>
 
       <div className={styles.container}>
-        <div className={styles.footerCard}>
+        <div className={styles.footerCard} data-reveal>
           <div className={styles.brand}>
             <div className={styles.logoWrap}>
               <Image
@@ -38,12 +40,12 @@ export default function Footer() {
 
           <nav className={styles.links} aria-label="Navegación footer">
             <span className={styles.columnTitle}>Secciones</span>
-            <a href="#inicio">Inicio</a>
-            <a href="#quienes-somos">Quiénes somos</a>
-            <a href="#servicios">Servicios</a>
-            <a href="#galeria">Galería</a>
-            <a href="#clientes">Clientes</a>
-            <a href="#contacto">Contacto</a>
+            <a href="/#inicio">Inicio</a>
+            <a href="/#quienes-somos">Quiénes somos</a>
+            <a href="/#servicios">Servicios</a>
+            <a href="/#galeria">Galería</a>
+            <a href="/#clientes">Clientes</a>
+            <a href="/#contacto">Contacto</a>
           </nav>
 
           <div className={styles.contact}>
@@ -79,11 +81,20 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className={styles.serviceStrip}>
+        <div className={styles.serviceStrip} data-reveal>
           <span>Grúas horquilla 3T</span>
           <span>Grúas horquilla 5T</span>
           <span>Arriendos flexibles</span>
           <span>Operación en Antofagasta</span>
+        </div>
+
+        <div className={styles.legalRow}>
+          <nav aria-label="Privacidad y datos personales">
+            <Link href="/politica-privacidad">Política de privacidad</Link>
+            <Link href="/politica-cookies">Cookies y almacenamiento</Link>
+            <Link href="/solicitud-datos">Ejercer mis derechos</Link>
+          </nav>
+          <BackToTop className={styles.backToTop} />
         </div>
       </div>
 

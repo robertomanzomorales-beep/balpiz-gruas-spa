@@ -29,7 +29,7 @@ export default function Servicios() {
   return (
     <section className={styles.section} id="servicios">
       <div className={styles.container}>
-        <div className={styles.header}>
+        <div className={styles.header} data-reveal>
           <div>
             <span className={styles.kicker}>Servicios</span>
           </div>
@@ -45,7 +45,7 @@ export default function Servicios() {
           </div>
         </div>
 
-        <div className={styles.feature}>
+        <div className={styles.feature} data-reveal>
           <div className={styles.featureImage}>
             <Image
               src="/servicios-flota-gruas-horquilla-3t-5t.webp"
@@ -74,11 +74,11 @@ export default function Servicios() {
         <div className={styles.grid}>
           {services.map((service, index) => (
             <article
-              className={styles.card}
+              className={styles.card} data-reveal
               key={service.title}
               style={
                 {
-                  "--delay": `${index * 0.08}s`,
+                  "--reveal-delay": `${index * 65}ms`,
                 } as CSSProperties
               }
             >

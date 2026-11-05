@@ -1,0 +1,11 @@
+.form { display: grid; gap: 20px; margin-top: 26px; }
+.form label { display: grid; gap: 9px; font-size: 13px; font-weight: 600; color: #3c382e; }
+.form input,.form textarea,.form select { width: 100%; background: #fff; border: 1px solid #d8d1c2; color: #302d25; border-radius: 8px; padding: 13px 14px; font-size: 16px; font-weight: 400; }
+.form textarea { resize: vertical; }
+.form input:focus,.form textarea:focus,.form select:focus { outline: 2px solid #b58c2f; outline-offset: 2px; }
+.form .hint { font-size: 12px; line-height: 1.7; margin: -2px 0 0; }
+.form button,.form a.send { justify-self: start; background: #f5b400; color: #171717; font-size: 13px; font-weight: 650; border: 1px solid #e6a900; border-radius: 8px; min-height: 46px; padding: 13px 21px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+.form button:hover,.form a.send:hover { background: #ffca2c; }
+.draft { padding: 23px; border-radius: 10px; border: 1px solid #e6d7b9; background: #faf6ec; }
+.draft > strong { font-size: 15px; }
+.draft pre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; font-size: 13px; color: #4b463a; line-height: 1.7; margin: 20px 0; padding: 17px; background: #fffdf8; border-radius: 6px; }
